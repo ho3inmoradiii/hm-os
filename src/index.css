@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root {
+    --font-mono: 'Courier New', Courier, monospace;
+    --color-ph-dark: #151515;
+    --color-ph-orange: #f54e00;
+}
+
+body {
+    background-color: var(--color-ph-dark);
+    color: #eaeaea;
+    font-family: var(--font-mono);
+    overflow: hidden;
+    user-select: none;
+}
