@@ -1,5 +1,5 @@
-import {useUIStore} from "@store/uiStore.ts";
 import {useEffect} from "react";
+import {useUIStore} from "@store";
 
 export const useGlobalContextMenu = () => {
     const { openContextMenu, closeContextMenu } = useUIStore();
