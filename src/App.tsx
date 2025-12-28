@@ -1,23 +1,41 @@
-import { useGlobalContextMenu } from "@hooks/useGlobalContextMenu.ts";
-import { ContextMenu } from "@components/ContextMenu.tsx";
+import {
+    useGlobalContextMenu,
+    useSystemAppearance,
+    useGlobalShortcuts,
+    useIdleTimer
+} from "@hooks";
+import {
+    ContextMenu,
+    WindowManager,
+    DesktopBackground,
+    ScreensaverContainer,
+    ToastContainer
+} from '@components';
 
 const App = () => {
     useGlobalContextMenu();
+    useSystemAppearance();
+    useGlobalShortcuts();
+    useIdleTimer();
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-900">
-            <h1 className="text-4xl font-bold text-white">
-                Tailwind v4 is alive, Morty.
-            </h1>
+        <main className="w-screen h-screen overflow-hidden relative selection:bg-ph-orange selection:text-white">
+            <DesktopBackground/>
 
-            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                <h1 className="text-3xl font-bold font-mono tracking-tighter">
-                    Right Click <span className="text-ph-orange">Me!</span>
+            <ScreensaverContainer />
+
+            <div className="absolute inset-0 z-10 w-full h-full pointer-events-none overflow-hidden">
+                <h1 className="text-4xl select-none absolute center text-black dark:text-red-500 opacity-0">
+                    MORADI OS
                 </h1>
+
+                <WindowManager />
             </div>
 
             <ContextMenu/>
-        </div>
+
+            <ToastContainer />
+        </main>
     );
 }
 
