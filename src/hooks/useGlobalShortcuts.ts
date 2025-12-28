@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
-import { useUIStore } from '@store';
+import { Monitor } from 'lucide-react';
+import { useUIStore, useWindowStore } from '@store';
 
 export const useGlobalShortcuts = () => {
-    const { toggleDisplayModal, modals, closeContextMenu } = useUIStore();
+    const { closeContextMenu } = useUIStore();
+
+    const { openWindow, closeWindow, windows } = useWindowStore();
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -15,7 +18,15 @@ export const useGlobalShortcuts = () => {
 
             switch (e.key) {
                 case ',':
-                    toggleDisplayModal(!modals.isDisplayOpen);
+                    if (windows['settings']) {
+                        closeWindow('settings');
+                    } else {
+                        openWindow('settings', {
+                            title: 'Display Settings',
+                            icon: Monitor,
+                            size: { width: 350, height: 'auto' }
+                        });
+                    }
                     break;
 
                 case '.':
@@ -24,7 +35,6 @@ export const useGlobalShortcuts = () => {
 
                 case 'Escape':
                     closeContextMenu();
-                    if (modals.isDisplayOpen) toggleDisplayModal(false);
                     break;
             }
         };
@@ -33,5 +43,5 @@ export const useGlobalShortcuts = () => {
 
         return () => window.removeEventListener('keydown', handleKeyDown);
 
-    }, [modals.isDisplayOpen, toggleDisplayModal, closeContextMenu]);
+    }, [windows, openWindow, closeWindow, closeContextMenu]);
 };

@@ -8,17 +8,12 @@ interface ContextMenuState {
 }
 
 interface UIStore {
+    // --- Context Menu ---
     contextMenu: ContextMenuState;
-
-    modals: {
-        isDisplayOpen: boolean;
-    };
-
     openContextMenu: (x: number, y: number, content?: 'desktop' | 'icon') => void;
     closeContextMenu: () => void;
 
-    toggleDisplayModal: (isOpen: boolean) => void;
-
+    // --- Screensaver ---
     isScreensaverActive: boolean;
     setScreensaverActive: (active: boolean) => void;
 }
@@ -27,12 +22,8 @@ export const useUIStore = create<UIStore>()(
     immer((set) => ({
         contextMenu: {
             isOpen: false,
-            position: { x:0, y: 0 },
+            position: { x: 0, y: 0 },
             content: null,
-        },
-
-        modals: {
-            isDisplayOpen: false,
         },
 
         isScreensaverActive: false,
@@ -50,11 +41,5 @@ export const useUIStore = create<UIStore>()(
             set((state) => {
                 state.contextMenu.isOpen = false;
             }),
-
-        toggleDisplayModal: (isOpen) =>
-            set((state) => {
-                state.modals.isDisplayOpen = isOpen;
-                if (isOpen) state.contextMenu.isOpen = false;
-            }),
     }))
-)
+);
