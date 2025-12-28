@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Minus, Square } from 'lucide-react';
 import { useSettingsStore, useWindowStore } from '@store';
-import { useDraggable } from '@hooks';
+import { useDraggable, useResizable, type ResizeDirection } from '@hooks';
 import { cn } from '@utils';
 
 import { WindowControlBtn } from '../ui/WindowControlBtn';
@@ -11,16 +11,54 @@ interface WindowFrameProps {
     children: React.ReactNode;
 }
 
+const ResizeHandle = ({
+                          dir,
+                          onInit
+                      }: {
+    dir: ResizeDirection;
+    onInit: (e: React.MouseEvent, dir: ResizeDirection) => void
+}) => {
+    const positionClasses = {
+        n: "top-0 left-2 right-2 h-2 cursor-ns-resize z-50",
+        s: "bottom-0 left-2 right-2 h-2 cursor-ns-resize z-50",
+        e: "right-0 top-2 bottom-2 w-2 cursor-ew-resize z-50",
+        w: "left-0 top-2 bottom-2 w-2 cursor-ew-resize z-50",
+
+        ne: "top-0 right-0 w-4 h-4 cursor-nesw-resize z-50",
+        nw: "top-0 left-0 w-4 h-4 cursor-nwse-resize z-50",
+        se: "bottom-0 right-0 w-4 h-4 cursor-nwse-resize z-50",
+        sw: "bottom-0 left-0 w-4 h-4 cursor-nesw-resize z-50",
+    };
+
+    return (
+        <div
+            className={cn("absolute bg-transparent hover:bg-ph-orange/50 transition-colors", positionClasses[dir])}
+            onMouseDown={(e) => onInit(e, dir)}
+        />
+    );
+};
+
 export const WindowFrame = ({ id, children }: WindowFrameProps) => {
     const { display } = useSettingsStore();
 
     const windowState = useWindowStore((state) => state.windows[id]);
-    const { focusWindow, closeWindow, moveWindow, minimizeWindow } = useWindowStore();
+    const { focusWindow, closeWindow, moveWindow, minimizeWindow, resizeWindow } = useWindowStore();
 
     const { isDragging, handleMouseDown, elementRef } = useDraggable({
         initialPosition: windowState?.position || { x: 0, y: 0 },
         onDragEnd: (pos) => moveWindow(id, pos),
         enabled: !windowState?.isMaximized
+    });
+
+    const { initResize, isResizing } = useResizable({
+        nodeRef: elementRef,
+        initialSize: windowState?.size || { width: 600, height: 400 },
+        initialPosition: windowState?.position || { x: 0, y: 0 },
+        enabled: !windowState?.isMaximized,
+        onResizeEnd: (newSize, newPos) => {
+            resizeWindow(id, newSize);
+            moveWindow(id, newPos);
+        }
     });
 
     if (!windowState || windowState.isMinimized) return null;
@@ -44,10 +82,22 @@ export const WindowFrame = ({ id, children }: WindowFrameProps) => {
             }}
             className={cn(
                 "absolute flex flex-col bg-os-input-bg rounded-xl shadow-2xl overflow-hidden transition-shadow duration-200 pointer-events-auto",
-                isDragging ? "shadow-2xl select-none" : "shadow-xl"
+                (isDragging || isResizing) ? "shadow-2xl select-none" : "shadow-xl transition-all duration-200",
             )}
             onMouseDownCapture={() => focusWindow(id)}
         >
+            {!windowState.isMaximized && (
+                <>
+                    <ResizeHandle dir="n" onInit={initResize} />
+                    <ResizeHandle dir="s" onInit={initResize} />
+                    <ResizeHandle dir="e" onInit={initResize} />
+                    <ResizeHandle dir="w" onInit={initResize} />
+                    <ResizeHandle dir="ne" onInit={initResize} />
+                    <ResizeHandle dir="nw" onInit={initResize} />
+                    <ResizeHandle dir="se" onInit={initResize} />
+                    <ResizeHandle dir="sw" onInit={initResize} />
+                </>
+            )}
             <div
                 onMouseDown={handleMouseDown}
                 className={cn(
@@ -85,8 +135,8 @@ export const WindowFrame = ({ id, children }: WindowFrameProps) => {
                 </div>
             </div>
 
-            <div className="flex-1 bg-os-input-bg relative h-auto">
-                {isDragging && <div className="absolute inset-0 z-50 bg-transparent" />}
+            <div className="flex-1 bg-os-input-bg relative w-full overflow-hidden">
+                {(isDragging || isResizing) && <div className="absolute inset-0 z-50 bg-transparent"/>}
                 {children}
             </div>
         </div>

@@ -64,6 +64,7 @@ export const DisplayOptions = () => {
 
     const { setScreensaverActive } = useUIStore();
 
+
     return (
         <div className="w-full h-full bg-os-input-bg text-os-main font-sans p-4 overflow-y-auto">
             {/* 1. Color Mode */}

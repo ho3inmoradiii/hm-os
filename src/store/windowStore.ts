@@ -28,6 +28,7 @@ interface WindowStore {
     focusWindow: (id: string) => void;
     minimizeWindow: (id: string) => void;
     moveWindow: (id: string, position: { x: number; y: number }) => void;
+    resizeWindow: (id: string, size: { width: number | string; height: number | string }) => void;
 }
 
 export const useWindowStore = create<WindowStore>()(
@@ -89,6 +90,13 @@ export const useWindowStore = create<WindowStore>()(
             set((state) => {
                 if (state.windows[id]) {
                     state.windows[id].position = position;
+                }
+            }),
+
+        resizeWindow: (id, size) =>
+            set((state) => {
+                if (state.windows[id]) {
+                    state.windows[id].size = size;
                 }
             }),
     }))

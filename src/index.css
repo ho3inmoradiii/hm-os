@@ -117,4 +117,31 @@ body {
     body.cursor-rick [role="button"] {
         cursor: url('/cursors/rick-select.png') 0 0, pointer;
     }
+
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 9999px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #4b5563 transparent;
+    }
 }
