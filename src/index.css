@@ -95,7 +95,7 @@ body {
     body.cursor-default button,
     body.cursor-default [role="button"],
     body.cursor-default input[type="submit"]{
-        cursor: default;
+        cursor: pointer;
     }
 
     body.cursor-big,
