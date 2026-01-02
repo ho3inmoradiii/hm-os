@@ -45,7 +45,7 @@ const OptionGroup = ({ label, children, className, headerAction }: OptionGroupPr
             )}
         </div>
 
-        <div className="flex items-center gap-2 bg-os-primary-bg p-1 rounded-lg border border-os-input-border">
+        <div className="flex items-center gap-2 bg-os-primary-bg p-1 rounded border border-os-input-border">
             {children}
         </div>
     </div>
@@ -66,7 +66,7 @@ export const DisplayOptions = () => {
 
 
     return (
-        <div className="w-full h-full bg-os-input-bg text-os-main font-sans p-4 overflow-y-auto">
+        <div className="w-full h-full bg-transparent text-os-primary-text font-sans p-4 overflow-y-auto">
             {/* 1. Color Mode */}
             <OptionGroup label="Color mode">
                 <ToggleButton
@@ -131,7 +131,7 @@ export const DisplayOptions = () => {
                             key={id}
                             onClick={() => setWallpaper(id)}
                             className={cn(
-                                "relative group overflow-hidden rounded-lg border-2 transition-all duration-200 aspect-video",
+                                "relative group overflow-hidden rounded border-2 transition-all duration-200 aspect-video",
                                 display.wallpaper === id
                                     ? "border-ph-orange shadow-md scale-[1.02]" // Active
                                     : "border-transparent opacity-70 hover:opacity-100 hover:border-os-main" // Inactive

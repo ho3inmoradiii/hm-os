@@ -13,7 +13,7 @@ export const ContextMenu = () => {
 
     const handleOpenSettings = () => {
         openWindow('settings', {
-            title: 'Display Settings',
+            title: 'Display options',
             icon: Monitor,
             size: { width: 350, height: 'auto' },
             allowMaximize: false,

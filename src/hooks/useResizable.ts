@@ -20,11 +20,9 @@ export const useResizable = ({
                              }: UseResizableProps) => {
     const [isResizing, setIsResizing] = useState(false);
 
-    // دیتاهای لحظه شروع
     const startData = useRef({ x: 0, y: 0, w: 0, h: 0, winX: 0, winY: 0 });
     const activeDir = useRef<ResizeDirection | null>(null);
 
-    // دیتاهای لحظه ای (برای اینکه موقع ول کردن داشته باشیمشون)
     const currentData = useRef({ w: 0, h: 0, x: 0, y: 0 });
 
     const initResize = (e: React.MouseEvent, dir: ResizeDirection) => {
@@ -42,11 +40,10 @@ export const useResizable = ({
             y: e.clientY,
             w: rect.width,
             h: rect.height,
-            winX: initialPosition.x, // فرض میکنیم سینکه
+            winX: initialPosition.x,
             winY: initialPosition.y
         };
 
-        // مقدار اولیه کارنت هم ست میشه
         currentData.current = {
             w: rect.width, h: rect.height,
             x: initialPosition.x, y: initialPosition.y

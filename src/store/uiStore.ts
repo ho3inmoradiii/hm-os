@@ -16,6 +16,14 @@ interface UIStore {
     // --- Screensaver ---
     isScreensaverActive: boolean;
     setScreensaverActive: (active: boolean) => void;
+
+    // --- Window Sidebar ---
+    isWindowSidebarOpen: boolean;
+    toggleWindowSidebar: (active: boolean) => void;
+
+    // --- Command Palette ---
+    isCommandPaletteOpen: boolean;
+    toggleCommandPalette: (isOpen: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>()(
@@ -25,10 +33,15 @@ export const useUIStore = create<UIStore>()(
             position: { x: 0, y: 0 },
             content: null,
         },
-
         isScreensaverActive: false,
+        isWindowSidebarOpen: false,
+        isCommandPaletteOpen: false,
 
         setScreensaverActive: (active) => set({ isScreensaverActive: active }),
+
+        toggleWindowSidebar: (active) => set({ isWindowSidebarOpen: active }),
+
+        toggleCommandPalette: (isOpen) => set({ isCommandPaletteOpen: isOpen }),
 
         openContextMenu: (x, y, content = 'desktop') =>
             set((state) => {

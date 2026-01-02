@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Info, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useToastStore } from '@store';
@@ -18,7 +17,6 @@ export const ToastContainer = () => {
                         transition={{ duration: 0.2 }}
                         className="pointer-events-auto bg-[#1e1e1e] border border-[#333] text-gray-200 p-4 rounded-lg shadow-2xl min-w-[300px] flex items-start gap-3"
                     >
-                        {/* آیکون بر اساس نوع */}
                         <div className="mt-0.5">
                             {toast.type === 'success' && <CheckCircle size={16} className="text-green-500" />}
                             {(toast.type === 'info' || !toast.type) && <Info size={16} className="text-blue-400" />}
@@ -35,14 +33,12 @@ export const ToastContainer = () => {
                                 </p>
                             )}
 
-                            {/* دکمه اکشن (مثلا Disable screensaver) */}
                             {toast.action && (
                                 <button
                                     onClick={() => {
                                         toast.action?.onClick();
                                         removeToast(toast.id);
                                     }}
-                                    // حذف استایل‌های عجیب، فقط بولد و رنگی
                                     className="mt-3 text-xs font-semibold text-ph-orange hover:text-ph-orange/80 transition-colors"
                                 >
                                     {toast.action.label}

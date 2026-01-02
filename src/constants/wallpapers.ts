@@ -9,7 +9,7 @@ export const WALLPAPERS: Record<WallpaperId, string> = {
 
 export const WALLPAPER_META: Record<WallpaperId, { label: string; color: AdaptiveColor }> = {
     zilla: {
-        label: 'Rick\'s Toilet',
+        label: 'Zilla',
         color: {
             light: '#F3F4EF',
             dark: '#1D1F27'

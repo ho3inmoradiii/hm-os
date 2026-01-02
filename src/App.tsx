@@ -9,7 +9,10 @@ import {
     WindowManager,
     DesktopBackground,
     ScreensaverContainer,
-    ToastContainer
+    ToastContainer,
+    GlobalHeader,
+    MinimizedWindowsContainer,
+    CommandPalette
 } from '@components';
 
 const App = () => {
@@ -20,21 +23,26 @@ const App = () => {
 
     return (
         <main className="w-screen h-screen overflow-hidden relative selection:bg-ph-orange selection:text-white">
-            <DesktopBackground/>
+            <GlobalHeader />
 
+            <DesktopBackground/>
             <ScreensaverContainer />
 
-            <div className="absolute inset-0 z-10 w-full h-full pointer-events-none overflow-hidden">
+            <div className="absolute top-12 left-0 right-0 bottom-0 z-10 pointer-events-none overflow-hidden">
                 <h1 className="text-4xl select-none absolute center text-black dark:text-red-500 opacity-0">
                     MORADI OS
                 </h1>
 
-                <WindowManager />
+                <WindowManager/>
             </div>
 
             <ContextMenu/>
 
-            <ToastContainer />
+            <ToastContainer/>
+
+            <CommandPalette />
+
+            <MinimizedWindowsContainer />
         </main>
     );
 }
