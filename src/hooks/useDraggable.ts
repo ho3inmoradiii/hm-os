@@ -54,16 +54,25 @@ export const useDraggable = ({ initialPosition, onDragEnd, enabled = true, snapT
 
             const screenW = window.innerWidth;
             const screenH = window.innerHeight;
+
+            const TASKBAR_HEIGHT = 48;
+            const PADDING = 10;
+
+            const BOTTOM_LIMIT = screenH - TASKBAR_HEIGHT - PADDING;
+
             const { width, height } = elementRef.current.getBoundingClientRect();
 
             let finalX = currentPos.current.x;
             let finalY = currentPos.current.y;
 
-            if (finalX < 0) finalX = 0;
-            if (finalX + width > screenW) finalX = screenW - width;
+            if (finalX < PADDING) finalX = PADDING;
+            if (finalX + width > screenW - PADDING) finalX = screenW - width - PADDING;
 
-            if (finalY < 0) finalY = 0;
-            if (finalY + height > screenH) finalY = screenH - height;
+            if (finalY < PADDING) finalY = PADDING;
+
+            if (finalY + height > BOTTOM_LIMIT) {
+                finalY = BOTTOM_LIMIT - height;
+            }
 
             if (finalX !== currentPos.current.x || finalY !== currentPos.current.y) {
                 elementRef.current.style.transition = "transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)";

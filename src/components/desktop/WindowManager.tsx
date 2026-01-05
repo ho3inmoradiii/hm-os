@@ -2,10 +2,15 @@ import React from 'react';
 import { useWindowStore } from '@store';
 import { WindowFrame } from "./WindowFrame.tsx";
 import { DisplayOptions } from '../settings/DisplayOptions';
+import { Impact } from '../apps/Impact';
+import { Stack } from '../apps/Stack';
+import { Profile } from '../apps/Profile';
 
 const WINDOW_COMPONENTS: Record<string, React.ElementType> = {
     'settings': DisplayOptions,
-    // 'calculator': CalculatorApp,
+    'impact': Impact,
+    'stack': Stack,
+    'profile': Profile,
     // 'vscode': VSCodeApp,
 };
 

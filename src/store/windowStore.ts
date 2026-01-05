@@ -29,6 +29,7 @@ interface WindowStore {
     minimizeWindow: (id: string) => void;
     moveWindow: (id: string, position: { x: number; y: number }) => void;
     resizeWindow: (id: string, size: { width: number | string; height: number | string }) => void;
+    snapWindow: (id: string, direction: 'left' | 'right' | 'maximize') => void;
 }
 
 export const useWindowStore = create<WindowStore>()(
@@ -99,5 +100,68 @@ export const useWindowStore = create<WindowStore>()(
                     state.windows[id].size = size;
                 }
             }),
+
+        toggleMaximize: (id) => set((state) => {
+            const window = state.windows[id];
+            if (!window) return state;
+
+            return {
+                windows: {
+                    ...state.windows,
+                    [id]: {
+                        ...window,
+                        isMaximized: !window.isMaximized
+                    }
+                }
+            };
+        }),
+
+        snapWindow: (id, direction) => set((state) => {
+            const targetWindow = state.windows[id];
+            if (!targetWindow) return state;
+
+            const viewportW = window.innerWidth;
+            const viewportH = window.innerHeight;
+
+            const HEADER_HEIGHT_FOR_CALC = 48;
+
+            const TOP_OFFSET = 0;
+
+            let newSize = { width: 0, height: 0 };
+            let newPos = { x: 0, y: 0 };
+
+            if (direction === 'maximize') {
+                return {
+                    windows: {
+                        ...state.windows,
+                        [id]: { ...targetWindow, isMaximized: !targetWindow.isMaximized }
+                    }
+                };
+            }
+
+            const availableH = viewportH - HEADER_HEIGHT_FOR_CALC;
+
+            const halfW = viewportW / 2;
+
+            if (direction === 'left') {
+                newSize = { width: halfW, height: availableH };
+                newPos = { x: 0, y: TOP_OFFSET }; // y = 0
+            } else if (direction === 'right') {
+                newSize = { width: halfW, height: availableH };
+                newPos = { x: viewportW / 2, y: TOP_OFFSET }; // y = 0
+            }
+
+            return {
+                windows: {
+                    ...state.windows,
+                    [id]: {
+                        ...targetWindow,
+                        isMaximized: false,
+                        size: newSize,
+                        position: newPos
+                    }
+                }
+            };
+        }),
     }))
 );

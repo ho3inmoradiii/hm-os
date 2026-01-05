@@ -12,7 +12,8 @@ import {
     ToastContainer,
     GlobalHeader,
     MinimizedWindowsContainer,
-    CommandPalette
+    CommandPalette,
+    DesktopIcons
 } from '@components';
 
 const App = () => {
@@ -26,6 +27,9 @@ const App = () => {
             <GlobalHeader />
 
             <DesktopBackground/>
+
+            <DesktopIcons />
+
             <ScreensaverContainer />
 
             <div className="absolute top-12 left-0 right-0 bottom-0 z-10 pointer-events-none overflow-hidden">

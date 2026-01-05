@@ -80,7 +80,7 @@ export const CommandPalette = () => {
                             exit={{opacity: 0, scale: 0.95, y: -20}}
                             transition={{duration: 0.2}}
                             className={cn(
-                                "w-full max-w-lg overflow-hidden pointer-events-auto",
+                                "w-full max-w-lg overflow-hidden pointer-events-auto mx-4 md:mx-0",
                                 "backdrop-blur-xl",
                                 "bg-os-tertiary-bg/95 dark:bg-[#1d1f27]/95",
                                 "border border-os-primary-border rounded shadow-2xl",
@@ -99,12 +99,16 @@ export const CommandPalette = () => {
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                 />
-                                <div className="flex gap-1">
+                                <button
+                                    onClick={() => toggleCommandPalette(false)}
+                                    className="hidden md:flex gap-1 cursor-pointer active:scale-95 transition-all"
+                                    title="Close (ESC)"
+                                >
                                     <span
                                         className="px-1.5 py-0.5 rounded text-[10px] bg-os-primary-bg border border-os-primary-border text-os-primary-muted font-mono">
                                         ESC
                                     </span>
-                                </div>
+                                </button>
                             </div>
 
                             {/* --- Results List --- */}

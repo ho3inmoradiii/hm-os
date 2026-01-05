@@ -29,12 +29,15 @@ export const useIdleTimer = () => {
             console.log('Wake up! Deactivating screensaver.');
             setScreensaverActive(false);
 
+            const isMobile = window.innerWidth < 768;
+
             addToast({
                 title: 'Screensaver dismissed',
-                description: 'Want to disable it permanently?',
+                description: isMobile ? undefined : 'Want to disable it permanently?',
                 type: 'info',
-                duration: 8000,
-                action: {
+                duration: isMobile ? 3000 : 8000,
+
+                action: isMobile ? undefined : {
                     label: 'Disable screensaver',
                     onClick: () => {
                         toggleScreensaver(false);

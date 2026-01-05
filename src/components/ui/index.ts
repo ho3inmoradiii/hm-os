@@ -5,3 +5,4 @@ export * from './MinimizedWindowsContainer';
 export * from './Tooltip';
 export * from './CornerEnterIcon';
 export * from './ResizeHandle';
+export * from './SnapMenu';
