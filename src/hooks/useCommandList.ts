@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import {
     Monitor, Moon, Sun, Laptop,
     Trash2, ExternalLink,
@@ -18,6 +18,18 @@ export const useCommandList = () => {
     } = useSettingsStore();
 
     const { closeWindow, openWindow, windows } = useWindowStore();
+
+    const [isTouch, setIsTouch] = useState(false);
+
+    useEffect(() => {
+        const checkTouch = () => {
+            setIsTouch(window.matchMedia('(pointer: coarse)').matches);
+        };
+
+        checkTouch();
+        window.addEventListener('resize', checkTouch);
+        return () => window.removeEventListener('resize', checkTouch);
+    }, []);
 
     const commands = useMemo(() => {
         const baseCommands = [
@@ -53,14 +65,14 @@ export const useCommandList = () => {
                     icon: Monitor,
                     size: { width: 350, height: 'auto' }
                 }),
-                show: true
+                show: !isTouch
             },
             {
                 id: 'close-all',
                 label: 'Close All Windows',
                 icon: Trash2,
                 action: () => Object.keys(windows).forEach(id => closeWindow(id)),
-                show: Object.keys(windows).length > 0
+                show: !isTouch && Object.keys(windows).length > 0
             },
             {
                 id: 'screensaver',
@@ -78,7 +90,7 @@ export const useCommandList = () => {
             },
         ];
 
-        const cursorCommands = [
+        const cursorCommands = isTouch ? [] : [
             {
                 id: 'cursor-default',
                 label: 'Cursor: Default',
@@ -126,7 +138,8 @@ export const useCommandList = () => {
         closeWindow,
         setScreensaverActive,
         setCursor,
-        setWallpaper
+        setWallpaper,
+        isTouch
     ]);
 
     return commands;

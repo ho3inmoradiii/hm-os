@@ -6,6 +6,12 @@ export const useGlobalContextMenu = () => {
 
     useEffect(() => {
         const handleContextMenu = (e: MouseEvent) => {
+            const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+            if (isTouchDevice) {
+                return;
+            }
+
             e.preventDefault();
             openContextMenu(e.clientX, e.clientY, 'desktop');
         };

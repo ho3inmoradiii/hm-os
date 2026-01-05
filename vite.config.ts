@@ -22,6 +22,7 @@ export default defineConfig({
       "@windows": resolve(rootDir, "src/windows"),
       "@hooks": resolve(rootDir, "src/hooks"),
       "@types": resolve(rootDir, "src/types"),
+      "@data": resolve(rootDir, "src/data"),
     }
   }
 })

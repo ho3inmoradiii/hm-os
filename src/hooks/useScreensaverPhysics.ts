@@ -76,7 +76,6 @@ export const useScreensaverPhysics = (
                 physics.current.x = Math.random() * (width - elW);
                 physics.current.y = Math.random() * (height - elH);
 
-                // رنگ اولیه
                 elementRef.current.style.color = SCREENSAVER_COLORS[0];
 
                 loop();

@@ -66,13 +66,11 @@ export const useResizable = ({
             let newX = start.winX;
             let newY = start.winY;
 
-            // 1. محاسبات
             if (dir?.includes('e')) newW = start.w + deltaX;
             if (dir?.includes('w')) { newW = start.w - deltaX; newX = start.winX + deltaX; }
             if (dir?.includes('s')) newH = start.h + deltaY;
             if (dir?.includes('n')) { newH = start.h - deltaY; newY = start.winY + deltaY; }
 
-            // 2. محدودیت ها
             if (newW < minSize.width) {
                 newW = minSize.width;
                 if (dir?.includes('w')) newX = start.winX + (start.w - minSize.width);
@@ -82,19 +80,16 @@ export const useResizable = ({
                 if (dir?.includes('n')) newY = start.winY + (start.h - minSize.height);
             }
 
-            // 3. اعمال به DOM
             nodeRef.current.style.width = `${newW}px`;
             nodeRef.current.style.height = `${newH}px`;
             nodeRef.current.style.transform = `translate(${newX}px, ${newY}px)`;
 
-            // 4. ذخیره
             currentData.current = { w: newW, h: newH, x: newX, y: newY };
         };
 
         const handleMouseUp = () => {
             setIsResizing(false);
             activeDir.current = null;
-            // آپدیت نهایی استور
             onResizeEnd(
                 { width: currentData.current.w, height: currentData.current.h },
                 { x: currentData.current.x, y: currentData.current.y }
