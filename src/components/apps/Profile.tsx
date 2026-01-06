@@ -71,7 +71,7 @@ export const Profile = () => {
                 {/* Footer only visible in desktop mode */}
                 {!isCompact && (
                     <div className="flex flex-col mt-auto pt-4 border-t border-gray-200 dark:border-white/5">
-                        <span className="text-xs text-gray-400 font-mono">v2.4.0 (Stable)</span>
+                        <span className="text-xs text-gray-400 font-mono">v1.0 (Stable)</span>
                         <span className="text-[10px] text-gray-300 dark:text-white/20 mt-1">
                             &copy; 2025 Hossein Moradi
                         </span>
