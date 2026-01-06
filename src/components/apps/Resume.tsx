@@ -6,7 +6,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const RESUME_URL = "/files/resume.pdf";
+const RESUME_URL = "/files/hossein-moradi-frontend-engineer.pdf";
 
 export const Resume = () => {
     const [numPages, setNumPages] = useState<number | null>(null);
