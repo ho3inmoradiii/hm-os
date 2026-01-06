@@ -1,10 +1,13 @@
 import React from 'react';
 import { useWindowStore } from '@store';
-import { DESKTOP_ITEMS, type DesktopItem } from '@constants';
+import { type DesktopItem } from '@constants';
 import { DesktopIconItem } from '@components';
+import { useDesktopStore } from '@/store';
 
 export const DesktopIcons = () => {
     const { openWindow } = useWindowStore();
+
+    const { items, updateItemPosition, resetSignal } = useDesktopStore();
 
     const handleOpen = (item: DesktopItem) => {
         if (item.action === 'link' && item.payload) {
@@ -26,11 +29,12 @@ export const DesktopIcons = () => {
 
     return (
         <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-            {DESKTOP_ITEMS.map((item) => (
+            {items.map((item) => (
                 <DesktopIconItem
-                    key={item.id}
+                    key={`${item.id}-${resetSignal}`}
                     item={item}
                     onOpen={handleOpen}
+                    onPositionUpdate={(newCol, newRow) => updateItemPosition(item.id, newCol, newRow)}
                 />
             ))}
         </div>

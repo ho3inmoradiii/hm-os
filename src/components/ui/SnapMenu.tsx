@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ArrowLeftToLine, ArrowRightToLine, Maximize } from 'lucide-react';
 import { cn } from '@utils';
 

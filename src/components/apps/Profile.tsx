@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    User, Briefcase, MessageSquare, Download,
-    ExternalLink, MapPin
+    User, Briefcase, MessageSquare, Eye,
+    ExternalLink, MapPin, Mail
 } from 'lucide-react';
 import { cn } from '@utils';
 import { BIO_DATA } from '@data';
+import { useWindowStore } from '@store';
 
 const TABS = [
     { id: 'overview', label: 'Overview', icon: User },
@@ -32,7 +33,6 @@ export const Profile = () => {
         return () => resizeObserver.disconnect();
     }, []);
 
-    const isMobile = width < 500;
     const isCompact = width < 768;
 
     return (
@@ -103,6 +103,24 @@ export const Profile = () => {
 const OverviewTab = ({ containerWidth }: { containerWidth: number }) => {
     const { profile } = BIO_DATA;
 
+    const { openWindow } = useWindowStore();
+
+    const handleResumeClick = () => {
+        openWindow('resume', {
+            title: 'My Resume',
+            icon: Briefcase,
+            size: { width: 800, height: 700 },
+        });
+    };
+
+    const handleContactClick = () => {
+        openWindow('contact', {
+            title: 'Contact Me',
+            icon: Mail,
+            size: { width: 800, height: 700 },
+        });
+    };
+
     const isStacked = containerWidth < 600;
 
     return (
@@ -110,7 +128,7 @@ const OverviewTab = ({ containerWidth }: { containerWidth: number }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="flex flex-col gap-8 max-w-2xl mx-auto"
+            className="flex flex-col gap-8 w-full"
         >
             {/* Header Section */}
             <div className={cn(
@@ -191,14 +209,14 @@ const OverviewTab = ({ containerWidth }: { containerWidth: number }) => {
                     containerWidth < 450 ? "flex-col" : "flex-row"
                 )}>
                     <button
-                        onClick={() => window.open(profile.actions.resume, '_blank')}
+                        onClick={handleResumeClick}
                         className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold hover:opacity-90 transition-opacity shadow-lg whitespace-nowrap"
                     >
-                        <Download size={18} />
-                        Download Resume
+                        <Eye size={18} />
+                        View Resume
                     </button>
                     <button
-                        onClick={() => window.open(profile.actions.contact)}
+                        onClick={handleContactClick}
                         className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 font-semibold text-gray-900 dark:text-white transition-colors whitespace-nowrap"
                     >
                         Contact Me
@@ -215,7 +233,7 @@ const JourneyTab = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col gap-6 max-w-2xl mx-auto"
+            className="flex flex-col gap-6 w-full"
         >
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Professional Journey</h2>
             <div className="relative border-l-2 border-gray-200 dark:border-white/10 ml-3 space-y-12">
@@ -260,7 +278,7 @@ const ThoughtsTab = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col gap-4 max-w-2xl mx-auto"
+            className="flex flex-col gap-4 w-full"
         >
             <div className="mb-4">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Featured Thoughts</h2>

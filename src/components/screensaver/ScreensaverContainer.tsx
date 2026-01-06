@@ -18,7 +18,11 @@ export const ScreensaverContainer = () => {
 
     const containerRef = useRef<HTMLDivElement>(null);
     const logoRef = useRef<HTMLDivElement>(null);
-    useScreensaverPhysics(active && !isMobile, containerRef, logoRef);
+    useScreensaverPhysics(
+        active && !isMobile,
+        containerRef as React.RefObject<HTMLDivElement>,
+        logoRef as React.RefObject<HTMLDivElement>
+    );
 
     return (
         <AnimatePresence>

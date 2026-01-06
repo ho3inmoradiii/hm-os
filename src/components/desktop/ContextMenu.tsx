@@ -1,12 +1,16 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import { useRef, useLayoutEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RefreshCw, Layout, Command, Settings, Trash2, Monitor } from 'lucide-react';
+import { RefreshCw, Layout, Settings, Trash2, Monitor } from 'lucide-react';
 import { useUIStore, useWindowStore } from '@store';
+import { useDesktopStore } from '@/store';
 import { MenuItem } from "@components";
 
 export const ContextMenu = () => {
     const { contextMenu, closeContextMenu } = useUIStore();
     const { openWindow } = useWindowStore();
+
+    const { resetIcons } = useDesktopStore();
+
     const menuRef = useRef<HTMLDivElement>(null);
 
     const [adjustedPos, setAdjustedPos] = useState(contextMenu.position);
@@ -18,6 +22,11 @@ export const ContextMenu = () => {
             size: { width: 350, height: 'auto' },
             allowMaximize: false,
         });
+    };
+
+    const handleAlignIcons = () => {
+        resetIcons();
+        closeContextMenu();
     };
 
     useLayoutEffect(() => {
@@ -39,10 +48,10 @@ export const ContextMenu = () => {
             {contextMenu.isOpen && (
                 <motion.div
                     ref={menuRef}
-                    initial={{ opacity: 0, scale: 0.95, y: 5 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, duration: 0.1 }}
-                    transition={{ duration: 0.1, ease: "easeOut" }}
+                    initial={{opacity: 0, scale: 0.95, y: 5}}
+                    animate={{opacity: 1, scale: 1, y: 0}}
+                    exit={{opacity: 0, scale: 0.95}}
+                    transition={{duration: 0.1, ease: "easeOut"}}
                     style={{
                         top: adjustedPos.y,
                         left: adjustedPos.x,
@@ -50,7 +59,6 @@ export const ContextMenu = () => {
                         zIndex: 9999
                     }}
                     className="min-w-[220px] bg-os-primary-bg border border-os-primary-border shadow-2xl rounded-lg overflow-hidden font-sans select-none p-[5px]"
-
                     onContextMenu={(e) => e.preventDefault()}
                 >
                     <MenuItem
@@ -59,20 +67,14 @@ export const ContextMenu = () => {
                         shortcut=","
                         onClick={() => handleOpenSettings()}
                     />
-                    <MenuItem
-                        icon={Command}
-                        label="Shortcuts"
-                        shortcut="."
-                        onClick={() => alert('Coming Soon')}
-                    />
 
                     {/* (Separator) */}
-                    <div className="h-[1px] bg-os-primary-border my-1 mx-2 opacity-50" />
+                    <div className="h-[1px] bg-os-primary-border my-1 mx-2 opacity-50"/>
 
                     <MenuItem
                         icon={Layout}
                         label="Align Icons"
-                        onClick={() => console.log('Align')}
+                        onClick={handleAlignIcons}
                     />
 
                     <MenuItem
@@ -82,7 +84,7 @@ export const ContextMenu = () => {
                     />
 
                     {/* (Separator) */}
-                    <div className="h-[1px] bg-os-primary-border my-1 mx-2 opacity-50" />
+                    <div className="h-[1px] bg-os-primary-border my-1 mx-2 opacity-50"/>
 
                     <MenuItem
                         intent="danger"

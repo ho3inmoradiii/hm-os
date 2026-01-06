@@ -5,13 +5,18 @@ import { DisplayOptions } from '../settings/DisplayOptions';
 import { Impact } from '../apps/Impact';
 import { Stack } from '../apps/Stack';
 import { Profile } from '../apps/Profile';
+import { Resume } from '../apps/Resume';
+import { Contact } from '../apps/Contact';
+import { Trash } from '../apps/Trash';
 
 const WINDOW_COMPONENTS: Record<string, React.ElementType> = {
     'settings': DisplayOptions,
     'impact': Impact,
     'stack': Stack,
     'profile': Profile,
-    // 'vscode': VSCodeApp,
+    'resume': Resume,
+    'contact': Contact,
+    'trash': Trash,
 };
 
 export const WindowManager = () => {

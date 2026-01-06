@@ -6,7 +6,7 @@ export const useIdleTimer = () => {
     const { setScreensaverActive, isScreensaverActive } = useUIStore();
     const { addToast } = useToastStore();
 
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const activationTimeRef = useRef<number>(0);
 

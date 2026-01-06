@@ -5,6 +5,7 @@ import { type DesktopItem } from '@constants';
 interface DesktopIconItemProps {
     item: DesktopItem;
     onOpen: (item: DesktopItem) => void;
+    onPositionUpdate?: (newCol: number, newRow: number) => void;
 }
 
 export const DesktopIconItem = ({ item, onOpen }: DesktopIconItemProps) => {
@@ -25,6 +26,10 @@ export const DesktopIconItem = ({ item, onOpen }: DesktopIconItemProps) => {
         top: 80 + (item.row * 110),
         [isRight ? 'right' : 'left']: 24 + (colIndex * 100),
     };
+
+    useEffect(() => {
+        setPosition({ x: 0, y: 0 });
+    }, [item]);
 
     // --- Window Resize Handler (Keeping items in view) ---
     useEffect(() => {
@@ -60,11 +65,10 @@ export const DesktopIconItem = ({ item, onOpen }: DesktopIconItemProps) => {
         return () => window.removeEventListener('resize', handleResize);
     }, [isDragging]);
 
-    // --- Drag Logic ---
+    // --- Drag Logic (Exactly same as before) ---
 
     const handlePointerDown = (e: React.PointerEvent) => {
         if (window.innerWidth < 768) return;
-
         if (e.button !== 0) return;
 
         e.preventDefault();
@@ -108,7 +112,7 @@ export const DesktopIconItem = ({ item, onOpen }: DesktopIconItemProps) => {
         }
     };
 
-    const handlePointerUp = (e: PointerEvent) => {
+    const handlePointerUp = () => {
         window.removeEventListener('pointermove', handlePointerMove);
         window.removeEventListener('pointerup', handlePointerUp);
 

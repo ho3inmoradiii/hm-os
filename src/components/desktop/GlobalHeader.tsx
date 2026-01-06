@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import {
     Search,
@@ -53,12 +53,30 @@ export const GlobalHeader = () => {
             "select-none"
         )}>
             {/* --- LEFT: Brand / Start --- */}
-            <div className="flex items-center gap-3 sm:gap-4">
-                <div className="flex items-center gap-2 font-bold text-sm tracking-wide">
-                    <div className="w-6 h-6 bg-ph-orange rounded flex items-center justify-center text-white font-mono text-xs shadow-sm shadow-ph-orange/20">
-                        P
-                    </div>
-                    <span className="hidden sm:block opacity-80">Product OS</span>
+            <div className="flex items-center gap-3 sm:gap-4 select-none cursor-pointer group" onClick={() => window.location.reload()}>
+                {/* Logo Container */}
+                <div className="relative w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
+
+                    {/* Inner Border/Glow */}
+                    <div className="absolute inset-[1px] rounded-[10px] bg-black/20" />
+
+                    {/* Text Logo */}
+                    <span className="relative text-white font-bold font-mono text-sm tracking-tighter">
+                        HM
+                    </span>
+
+                    {/* Status Dot (Online) */}
+                    <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-os-primary-bg" />
+                </div>
+
+                {/* Text Label */}
+                <div className="hidden sm:flex flex-col">
+                    <span className="font-bold text-sm leading-tight text-gray-900 dark:text-white">
+                        Hossein
+                    </span>
+                    <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase">
+                        OS Beta 1.0
+                    </span>
                 </div>
             </div>
 

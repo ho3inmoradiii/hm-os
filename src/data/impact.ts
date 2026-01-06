@@ -1,4 +1,12 @@
-import { TrendingUp, Users, Eye, Zap } from 'lucide-react';
+import { TrendingUp, Users, Eye, Zap, type LucideIcon } from 'lucide-react';
+
+export interface ImpactStatItem {
+    label: string;
+    value: string;
+    icon: LucideIcon;
+    color: string;
+    bg: string;
+}
 
 export const IMPACT_CHART_DATA = [
     { name: 'Week 1', impressions: 20194 },
@@ -11,7 +19,7 @@ export const IMPACT_CHART_DATA = [
     { name: 'Week 8', impressions: 43947 },
 ];
 
-export const IMPACT_STATS = [
+export const IMPACT_STATS: ImpactStatItem[] = [
     {
         label: 'Total Impressions',
         value: '357K+',

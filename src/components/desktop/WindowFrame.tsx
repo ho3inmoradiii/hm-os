@@ -48,7 +48,8 @@ export const WindowFrame = ({ id, children }: WindowFrameProps) => {
     });
 
     const { initResize, isResizing } = useResizable({
-        nodeRef: elementRef,
+        nodeRef: elementRef as React.RefObject<HTMLDivElement>,
+
         initialSize: windowState?.size || { width: 600, height: 400 },
         initialPosition: windowState?.position || { x: 0, y: 0 },
         enabled: !windowState?.isMaximized && !isMobile,
@@ -101,8 +102,8 @@ export const WindowFrame = ({ id, children }: WindowFrameProps) => {
             const PADDING = 10;
             const HEADER_OFFSET = 48;
 
-            let newW = windowState.size.width;
-            let newH = windowState.size.height;
+            let newW = windowState.size.width as number;
+            let newH = windowState.size.height as number;
             let newX = windowState.position.x;
             let newY = windowState.position.y;
 
@@ -155,7 +156,7 @@ export const WindowFrame = ({ id, children }: WindowFrameProps) => {
     const cursorStyles = {
         big: "cursor-[url('/cursors/big-drag.svg')_10_10,move]",
         rick: "cursor-[url('/cursors/rick-cursor.png')]",
-        default: "cursor-default"
+        default: "cursor-all-scroll"
     };
 
     const headerCursorClass = cursorStyles[display.cursor] || cursorStyles.default;
@@ -190,7 +191,6 @@ export const WindowFrame = ({ id, children }: WindowFrameProps) => {
         >
             {!windowState.isMaximized && !isMobile && (
                 <>
-                    <ResizeHandle dir="n" onInit={initResize} />
                     <ResizeHandle dir="s" onInit={initResize} />
                     <ResizeHandle dir="e" onInit={initResize} />
                     <ResizeHandle dir="w" onInit={initResize} />

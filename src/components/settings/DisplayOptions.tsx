@@ -1,5 +1,5 @@
 import React from 'react';
-import { Monitor, Moon, Sun, MousePointer, X, Minus, Play } from 'lucide-react';
+import { Monitor, Moon, Sun, MousePointer, Play } from 'lucide-react';
 import { WALLPAPERS, WALLPAPER_META } from '@constants';
 import { useSettingsStore, useUIStore, type WallpaperId } from '@store';
 import { cn } from '@utils';

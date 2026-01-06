@@ -26,7 +26,7 @@ export const useScreensaverPhysics = (
         if (!active) return;
 
         let animationFrameId: number;
-        let initTimeout: NodeJS.Timeout;
+        let initTimeout: ReturnType<typeof setTimeout>;
 
         const cycleColor = (element: HTMLDivElement) => {
             const p = physics.current;

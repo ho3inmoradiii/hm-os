@@ -7,6 +7,7 @@ interface TooltipProps {
     children: React.ReactNode;
     content: React.ReactNode;
     side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
     enabled?: boolean;
     className?: string;
     delay?: number;
@@ -16,12 +17,12 @@ export const Tooltip = ({
                             children,
                             content,
                             side = 'bottom',
+                            align = 'center',
                             enabled = true,
                             className,
                             delay = 0.2
                         }: TooltipProps) => {
     const [isVisible, setIsVisible] = useState(false);
-
     const [coords, setCoords] = useState({ top: 0, left: 0, arrowOffset: 0 });
 
     const triggerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +43,15 @@ export const Tooltip = ({
                 top = triggerRect.bottom + 8;
             }
 
-            let left = triggerCenter - tooltipRect.width / 2;
+            let left = 0;
+
+            if (align === 'start') {
+                left = triggerRect.left;
+            } else if (align === 'end') {
+                left = triggerRect.right - tooltipRect.width;
+            } else {
+                left = triggerCenter - tooltipRect.width / 2;
+            }
 
             if (left < padding) {
                 left = padding;
@@ -55,7 +64,7 @@ export const Tooltip = ({
 
             setCoords({ top, left, arrowOffset });
         }
-    }, [isVisible, side]);
+    }, [isVisible, side, align]);
 
     return (
         <>

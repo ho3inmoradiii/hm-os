@@ -2,10 +2,25 @@ import {
     Code2, Palette, Database, Terminal,
     Globe, Layers, GitBranch, Zap,
     Server, Braces, Box, LayoutTemplate,
-    Hexagon
+    Hexagon,
+    type LucideIcon
 } from 'lucide-react';
 
-export const TECH_STACK = [
+export interface TechItem {
+    name: string;
+    icon: LucideIcon;
+    level: string;
+    desc: string;
+    color: string;
+    bg: string;
+}
+
+export interface TechCategory {
+    category: string;
+    items: TechItem[];
+}
+
+export const TECH_STACK: TechCategory[] = [
     {
         category: "Frontend Core",
         items: [

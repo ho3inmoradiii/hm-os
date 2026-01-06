@@ -2,10 +2,20 @@ import { useMemo, useEffect, useState } from 'react';
 import {
     Monitor, Moon, Sun, Laptop,
     Trash2, ExternalLink,
-    MousePointer, Image as ImageIcon
+    MousePointer, Image as ImageIcon,
+    type LucideIcon
 } from 'lucide-react';
 import { useUIStore, useSettingsStore, useWindowStore } from '@store';
 import { LINKS, WALLPAPER_META, WALLPAPERS } from '@constants';
+
+export interface CommandItem {
+    id: string;
+    label: string;
+    icon: LucideIcon;
+    action: () => void;
+    show: boolean;
+    shortcut?: string;
+}
 
 export const useCommandList = () => {
     const { setScreensaverActive } = useUIStore();
@@ -31,8 +41,8 @@ export const useCommandList = () => {
         return () => window.removeEventListener('resize', checkTouch);
     }, []);
 
-    const commands = useMemo(() => {
-        const baseCommands = [
+    const commands = useMemo<CommandItem[]>(() => {
+        const baseCommands: CommandItem[] = [
             {
                 id: 'theme-light',
                 label: 'Theme: Light Mode',

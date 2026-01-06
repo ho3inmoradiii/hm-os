@@ -30,6 +30,7 @@ interface WindowStore {
     moveWindow: (id: string, position: { x: number; y: number }) => void;
     resizeWindow: (id: string, size: { width: number | string; height: number | string }) => void;
     snapWindow: (id: string, direction: 'left' | 'right' | 'maximize') => void;
+    toggleMaximize: (id: string) => void;
 }
 
 export const useWindowStore = create<WindowStore>()(
@@ -145,10 +146,10 @@ export const useWindowStore = create<WindowStore>()(
 
             if (direction === 'left') {
                 newSize = { width: halfW, height: availableH };
-                newPos = { x: 0, y: TOP_OFFSET }; // y = 0
+                newPos = { x: 0, y: TOP_OFFSET };
             } else if (direction === 'right') {
                 newSize = { width: halfW, height: availableH };
-                newPos = { x: viewportW / 2, y: TOP_OFFSET }; // y = 0
+                newPos = { x: viewportW / 2, y: TOP_OFFSET };
             }
 
             return {

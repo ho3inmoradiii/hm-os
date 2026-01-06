@@ -12,7 +12,7 @@ interface UseDraggableProps {
     snapThreshold?: number;
 }
 
-export const useDraggable = ({ initialPosition, onDragEnd, enabled = true, snapThreshold = 0 }: UseDraggableProps) => {
+export const useDraggable = ({ initialPosition, onDragEnd, enabled = true }: UseDraggableProps) => {
     const [isDragging, setIsDragging] = useState(false);
     const elementRef = useRef<HTMLDivElement>(null);
     const offset = useRef({ x: 0, y: 0 });

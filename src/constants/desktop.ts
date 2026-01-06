@@ -2,7 +2,9 @@ import {
     Trash2,
     TrendingUp,
     Layers,
-    User
+    User,
+    Briefcase,
+    Mail
 } from 'lucide-react';
 import React from "react";
 
@@ -49,7 +51,7 @@ export const DESKTOP_ITEMS: DesktopItem[] = [
         col: 0, row: 5,
     },
 
-    // --- 2. Stack ---
+    // --- 3. Stack ---
     {
         id: 'stack',
         label: 'Stack',
@@ -62,7 +64,7 @@ export const DESKTOP_ITEMS: DesktopItem[] = [
         col: 1, row: 0,
     },
 
-    // --- 3. Profile ---
+    // --- 4. Profile ---
     {
         id: 'profile',
         label: 'Profile',
@@ -73,5 +75,31 @@ export const DESKTOP_ITEMS: DesktopItem[] = [
         action: 'window',
         payload: 'profile',
         col: 2, row: 0,
+    },
+
+    // --- 5. Resume ---
+    {
+        id: 'resume',
+        label: 'Resume',
+        icon: '/icons/doc.png',
+        type: 'image',
+        windowIcon: Briefcase,
+
+        action: 'window',
+        payload: 'resume',
+        col: 1, row: 1,
+    },
+
+    // --- 6. Contact ---
+    {
+        id: 'contact',
+        label: 'Contact',
+        icon: '/icons/forum.png',
+        type: 'image',
+        windowIcon: Mail,
+
+        action: 'window',
+        payload: 'contact',
+        col: 3, row: 1,
     },
 ];
